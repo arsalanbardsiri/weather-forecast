@@ -1,0 +1,11 @@
+body{
+    margin: 0;
+    padding: 0;
+    font-family: 'Courier New', Courier, monospace;
+}
+header{
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 1rem;
+}
