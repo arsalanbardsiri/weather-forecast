@@ -67,4 +67,12 @@ function displayCurrentWeather(weatherData) {
   `;
 }
 
+cityForm.addEventListener('submit', function (event) {
+  event.preventDefault();
+  var cityName = cityInput.value.trim();
+  if (cityName !== '') {
+    fetchWeatherData(cityName);
+  }
+});
 
+displaySearchHistory();
