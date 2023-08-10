@@ -56,4 +56,15 @@ function fetchForecastData(lat, lon) {
     });
 }
 
+function displayCurrentWeather(weatherData) {
+  currentWeatherSection.innerHTML = `
+    <h2>${weatherData.name}</h2>
+    <p>Date: ${new Date().toLocaleDateString()}</p>
+    <p>Temperature: ${weatherData.main.temp}°F</p>
+    <p>Humidity: ${weatherData.main.humidity}%</p>
+    <p>Wind Speed: ${weatherData.wind.speed} mph</p>
+    <img src="https://openweathermap.org/img/w/${weatherData.weather[0].icon}.png" alt="Weather Icon">
+  `;
+}
+
 
