@@ -67,6 +67,34 @@ function displayCurrentWeather(weatherData) {
   `;
 }
 
+function displayForecast(forecastList) {
+  forecastSection.innerHTML = '';
+
+  var tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1);
+
+  for (var forecast of forecastList) {
+    var forecastDate = new Date(forecast.dt * 1000);
+    if (forecastDate.getDate() === tomorrow.getDate()) {
+      var forecastItem = document.createElement('div');
+      forecastItem.classList.add('forecast-item');
+
+      forecastItem.innerHTML = `
+        <h3>Date: ${forecastDate.toLocaleDateString()}</h3>
+        <img src="https://openweathermap.org/img/w/${forecast.weather[0].icon}.png" alt="Weather Icon">
+        <p>Temp: ${forecast.main.temp}°F</p>
+        <p>Wind: ${forecast.wind.speed} mph</p>
+        <p>Humidity: ${forecast.main.humidity}%</p>
+      `;
+
+      forecastSection.appendChild(forecastItem);
+      tomorrow.setDate(tomorrow.getDate() + 1); // Move to the next day
+    }
+  }
+}
+
+
+
 cityForm.addEventListener('submit', function (event) {
   event.preventDefault();
   var cityName = cityInput.value.trim();
