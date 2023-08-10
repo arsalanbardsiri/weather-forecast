@@ -43,4 +43,17 @@ function fetchWeatherData(cityName) {
 }
 
 //Fetch Forecast
+function fetchForecastData(lat, lon) {
+  var forecastApiUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=imperial&appid=${apiKey}`;
+
+  fetch(forecastApiUrl)
+    .then(response => response.json())
+    .then(data => {
+      displayForecast(data.list);
+    })
+    .catch(error => {
+      console.error('Error fetching forecast data:', error);
+    });
+}
+
 
