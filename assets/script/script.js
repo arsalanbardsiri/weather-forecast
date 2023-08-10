@@ -27,6 +27,11 @@ var currentWeatherSection = document.getElementById('current-weather');
 //Next 5 days
 var forecastSection = document.getElementById('forecast');
 
+//Handling the local Storage
+var searchHistoryContainer = document.getElementById('search-history');
+//To keep the display clean
+var MAX_SEARCH_HISTORY = 5;
+
 //Fetch Todays
 function fetchWeatherData(cityName) {
   var apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&units=imperial&appid=${apiKey}`;
@@ -56,6 +61,7 @@ function fetchForecastData(lat, lon) {
     });
 }
 
+//Display Today's Weather 
 function displayCurrentWeather(weatherData) {
   currentWeatherSection.innerHTML = `
     <h2>${weatherData.name}</h2>
@@ -67,6 +73,7 @@ function displayCurrentWeather(weatherData) {
   `;
 }
 
+//Display The forecast
 function displayForecast(forecastList) {
   forecastSection.innerHTML = '';
 
@@ -93,8 +100,13 @@ function displayForecast(forecastList) {
   }
 }
 
+//Set item firstly
+function saveSearchHistory() {
+  localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
+}
 
 
+//Search Form
 cityForm.addEventListener('submit', function (event) {
   event.preventDefault();
   var cityName = cityInput.value.trim();
