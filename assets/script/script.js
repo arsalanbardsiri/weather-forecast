@@ -105,6 +105,42 @@ function saveSearchHistory() {
   localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
 }
 
+//Get item
+function loadSearchHistory() {
+  var storedSearchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
+  return storedSearchHistory.slice(0, MAX_SEARCH_HISTORY);
+}
+
+//Display Search history
+function displaySearchHistory() {
+  searchHistoryContainer.innerHTML = '';
+
+  searchHistory.forEach(city => {
+    var historyItem = document.createElement('div');
+    historyItem.classList.add('history-item');
+    historyItem.textContent = city;
+    historyItem.addEventListener('click', () => {
+      fetchWeatherData(city);
+    });
+    searchHistoryContainer.appendChild(historyItem);
+  });
+}
+
+// Using a Queue concept, Push and Pop, Keep last 5 recent
+function addToSearchHistory(city) {
+  var index = searchHistory.indexOf(city);
+  if (index !== -1) {
+    searchHistory.splice(index, 1);
+  }
+
+  searchHistory.unshift(city);
+  if (searchHistory.length > MAX_SEARCH_HISTORY) {
+    searchHistory.pop();
+  }
+
+  saveSearchHistory();
+  displaySearchHistory();
+}
 
 //Search Form
 cityForm.addEventListener('submit', function (event) {
@@ -112,7 +148,9 @@ cityForm.addEventListener('submit', function (event) {
   var cityName = cityInput.value.trim();
   if (cityName !== '') {
     fetchWeatherData(cityName);
+    addToSearchHistory(cityName);
   }
 });
 
+var searchHistory = loadSearchHistory()
 displaySearchHistory();
